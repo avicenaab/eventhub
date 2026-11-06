@@ -11,9 +11,42 @@
         <p>{{ session('success') }}</p>
     @endif
 
+    @if ($errors->any())
+        @foreach ($errors->all() as $error)
+            <p style="color:red">{{ $error }}</p>
+        @endforeach
+    @endif
+
     <a href="{{ route('pendaftarans.create') }}">Tambah Pendaftaran</a>
 
     <br><br>
+
+    {{-- Tombol Export --}}
+    <a href="{{ route('pendaftarans.export') }}">
+        <button type="button">Download File</button>
+    </a>
+    <a href="{{ route('pendaftarans.pdf') }}">
+    <button type="button">Download PDF</button>
+    </a>
+    <a href="{{ route('pendaftarans.chart') }}">
+    <button type="button">Lihat Grafik</button>
+    </a>
+    <br><br>
+
+    {{-- Form Import --}}
+    <form action="{{ route('pendaftarans.import') }}"
+          method="POST"
+          enctype="multipart/form-data">
+
+        @csrf
+
+        <label>Pilih File Excel:</label>
+        <input type="file" name="file" accept=".xlsx,.xls,.csv" required>
+
+        <button type="submit">Masukkan File</button>
+    </form>
+
+    <br>
 
     <table border="1" cellpadding="10">
         <tr>

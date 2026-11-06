@@ -12,6 +12,18 @@ Route::get('/pendaftarans/create', [PendaftaranController::class, 'create'])
 Route::post('/pendaftarans', [PendaftaranController::class, 'store'])
     ->name('pendaftarans.store');
     
+Route::get('/pendaftarans/export', [PendaftaranController::class, 'export'])
+    ->name('pendaftarans.export');
+
+Route::post('/pendaftarans/import', [PendaftaranController::class, 'import'])
+    ->name('pendaftarans.import');
+
+Route::get('/pendaftarans/pdf', [PendaftaranController::class, 'pdf'])
+    ->name('pendaftarans.pdf');
+
+Route::get('/pendaftarans/chart', [PendaftaranController::class, 'chart'])
+    ->name('pendaftarans.chart');
+    
 Route::get('/pendaftarans/{id}/edit', [PendaftaranController::class, 'edit'])
     ->name('pendaftarans.edit');
 

@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Pendaftaran;
 use Illuminate\Http\Request;
+use App\Exports\PendaftaranExport;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\PendaftaranImport;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class PendaftaranController extends Controller
 {
@@ -41,7 +45,7 @@ class PendaftaranController extends Controller
     return view('pendaftarans.edit', compact('pendaftaran'));
 }
 
-public function update(Request $request, $id)
+    public function update(Request $request, $id)
 {
     $request->validate([
         'tanggal_daftar' => 'required|date',
@@ -65,12 +69,60 @@ public function update(Request $request, $id)
         ->with('success', 'Pendaftaran berhasil diperbarui!');
 }
 
-public function destroy($id)
+    public function destroy($id)
 {
     $pendaftaran = Pendaftaran::findOrFail($id);
     $pendaftaran->delete();
 
     return redirect()->route('pendaftarans.index')
         ->with('success', 'Pendaftaran berhasil dihapus!');
+}
+    public function export()
+{
+    return Excel::download(
+        new PendaftaranExport,
+        'data-pendaftaran.xlsx'
+    );
+}
+    public function import(Request $request)
+{
+    $request->validate([
+        'file' => 'required|mimes:xlsx,xls,csv',
+    ]);
+
+    Excel::import(
+        new PendaftaranImport,
+        $request->file('file')
+    );
+
+    return redirect()->route('pendaftarans.index')
+        ->with('success', 'Data berhasil diimport!');
+}
+    public function pdf()
+{
+    $pendaftarans = Pendaftaran::all();
+
+    $pdf = Pdf::loadView('pendaftarans.pdf', compact('pendaftarans'));
+
+    return $pdf->download('data-pendaftaran.pdf');
+}
+    public function chart()
+{
+    $pendaftaran = Pendaftaran::selectRaw(
+        'status_pendaftaran, COUNT(*) as total'
+    )
+    ->groupBy('status_pendaftaran')
+    ->get();
+
+    $pembayaran = Pendaftaran::selectRaw(
+        'status_pembayaran, COUNT(*) as total'
+    )
+    ->groupBy('status_pembayaran')
+    ->get();
+
+    return view('pendaftarans.chart', compact(
+        'pendaftaran',
+        'pembayaran'
+    ));
 }
 }
