@@ -34,4 +34,43 @@ class PendaftaranController extends Controller
         return redirect()->route('pendaftarans.index')
             ->with('success', 'Pendaftaran berhasil ditambahkan!');
     }
+    public function edit($id)
+{
+    $pendaftaran = Pendaftaran::findOrFail($id);
+
+    return view('pendaftarans.edit', compact('pendaftaran'));
+}
+
+public function update(Request $request, $id)
+{
+    $request->validate([
+        'tanggal_daftar' => 'required|date',
+        'peserta_id' => 'required|integer',
+        'event_id' => 'required|integer',
+        'status_pendaftaran' => 'required|string',
+        'status_pembayaran' => 'required|string',
+    ]);
+
+    $pendaftaran = Pendaftaran::findOrFail($id);
+
+    $pendaftaran->update($request->only([
+        'tanggal_daftar',
+        'peserta_id',
+        'event_id',
+        'status_pendaftaran',
+        'status_pembayaran',
+    ]));
+
+    return redirect()->route('pendaftarans.index')
+        ->with('success', 'Pendaftaran berhasil diperbarui!');
+}
+
+public function destroy($id)
+{
+    $pendaftaran = Pendaftaran::findOrFail($id);
+    $pendaftaran->delete();
+
+    return redirect()->route('pendaftarans.index')
+        ->with('success', 'Pendaftaran berhasil dihapus!');
+}
 }
