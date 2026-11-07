@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PendaftaranController;
+use App\Http\Controllers\PresensiController;
 
 Route::get('/pendaftarans', [PendaftaranController::class, 'index'])
     ->name('pendaftarans.index');
@@ -32,3 +33,5 @@ Route::put('/pendaftarans/{id}', [PendaftaranController::class, 'update'])
 
 Route::delete('/pendaftarans/{id}', [PendaftaranController::class, 'destroy'])
     ->name('pendaftarans.destroy');
+
+Route::resource('presensis', PresensiController::class);
