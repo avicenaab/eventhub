@@ -4,6 +4,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PendaftaranController;
 use App\Http\Controllers\PresensiController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\PesertaController;
+
+// Route untuk fitur Peserta milik Kay
+Route::resource('pesertas', PesertaController::class);
 
 Route::get('/pendaftarans', [PendaftaranController::class, 'index'])
     ->name('pendaftarans.index');

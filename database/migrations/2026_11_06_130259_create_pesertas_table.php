@@ -9,23 +9,15 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
-{
-    Schema::create('pesertas', function (Blueprint $table) {
-        $table->id();
-        $table->string('nama');
-        $table->string('email')->unique();
-        $table->string('no_hp')->nullable();
-        $table->string('instansi')->nullable();
-        $table->timestamps();
-    });
-}
-
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+   public function up(): void
     {
-        Schema::dropIfExists('pesertas');
+        Schema::create('pesertas', function (Blueprint $table) {
+            $table->id();
+            $table->string('nama');
+            $table->string('email')->unique();
+            $table->string('no_hp');
+            $table->string('instansi');
+            $table->timestamps();
+        });
     }
 };
