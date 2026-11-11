@@ -49,8 +49,14 @@ class PendaftaranController extends Controller
     public function edit($id)
 {
     $pendaftaran = Pendaftaran::findOrFail($id);
+    $pesertas = Peserta::all();
+    $events = Event::all();
 
-    return view('pendaftarans.edit', compact('pendaftaran'));
+    return view('pendaftarans.edit', compact(
+        'pendaftaran',
+        'pesertas',
+        'events'
+    ));
 }
 
     public function update(Request $request, $id)

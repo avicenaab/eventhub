@@ -8,64 +8,92 @@
 
     <style>
         * {
+            margin: 0;
+            padding: 0;
             box-sizing: border-box;
+            font-family: Arial, sans-serif;
         }
 
         body {
-            margin: 0;
-            font-family: Arial, sans-serif;
+            display: flex;
+            min-height: 100vh;
             background: #f4f6fb;
-            color: #1e293b;
+            color: #263248;
         }
 
-        nav {
+        /* SIDEBAR */
+        .sidebar {
+            width: 240px;
             background: #172554;
-            padding: 18px 7%;
             color: white;
+            padding: 30px 20px;
+            flex-shrink: 0;
         }
 
-        nav a {
-            color: white;
-            text-decoration: none;
+        .brand {
+            font-size: 24px;
             font-weight: bold;
+            margin-bottom: 40px;
         }
 
-        main {
-            max-width: 1150px;
-            margin: 35px auto;
-            padding: 0 20px;
+        .sidebar a {
+            display: block;
+            color: #cbd5e1;
+            text-decoration: none;
+            padding: 13px 15px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .sidebar a:hover,
+        .sidebar a.active {
+            background: #2563eb;
+            color: white;
+        }
+
+        /* MAIN CONTENT */
+        .main {
+            flex: 1;
+            min-width: 0;
+            padding: 40px;
         }
 
         .content {
-            background: white;
-            padding: 28px;
-            border-radius: 12px;
-            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.05);
+            width: 100%;
         }
 
         h1 {
             margin: 0 0 8px;
-            font-size: 26px;
+            font-size: 28px;
+            color: #263248;
+        }
+
+        h2, h3 {
+            color: #263248;
         }
 
         p {
             line-height: 1.6;
+            color: #64748b;
         }
 
         a {
             color: #2563eb;
         }
 
+        /* BUTTON */
         .btn,
         button {
             display: inline-block;
             padding: 10px 15px;
             border: none;
-            border-radius: 6px;
+            border-radius: 7px;
             background: #2563eb;
             color: white;
             text-decoration: none;
-            font-size: 14px;
+            font-size: 13px;
+            font-weight: bold;
             cursor: pointer;
         }
 
@@ -92,6 +120,7 @@
             text-decoration: none;
         }
 
+        /* TABLE */
         .table-wrap {
             width: 100%;
             overflow-x: auto;
@@ -104,23 +133,27 @@
             min-width: 650px;
         }
 
-        th,
+        th {
+            background: #172554;
+            color: white;
+            padding: 14px 12px;
+            text-align: left;
+            font-size: 13px;
+        }
+
         td {
-            padding: 13px;
+            padding: 14px 12px;
             border-bottom: 1px solid #e2e8f0;
             text-align: left;
             vertical-align: middle;
+            font-size: 13px;
         }
 
-        th {
-            background: #f1f5f9;
-            font-size: 14px;
+        tr:hover td {
+            background: #f8fafc;
         }
 
-        td {
-            font-size: 14px;
-        }
-
+        /* FORM */
         .form-group {
             margin-bottom: 18px;
         }
@@ -133,26 +166,29 @@
         }
 
         input,
-        select {
+        select,
+        textarea {
             width: 100%;
             padding: 11px;
             border: 1px solid #cbd5e1;
-            border-radius: 6px;
+            border-radius: 7px;
             font-size: 14px;
             background: white;
         }
 
         input:focus,
-        select:focus {
+        select:focus,
+        textarea:focus {
             outline: 2px solid #bfdbfe;
             border-color: #2563eb;
         }
 
+        /* SEARCH */
         .search-form {
             display: flex;
             gap: 10px;
             flex-wrap: wrap;
-            margin-top: 25px;
+            margin-top: 20px;
         }
 
         .search-form input {
@@ -165,9 +201,10 @@
             min-width: 160px;
         }
 
+        /* ALERT */
         .alert {
-            padding: 12px 15px;
-            border-radius: 6px;
+            padding: 14px 18px;
+            border-radius: 8px;
             margin: 18px 0;
         }
 
@@ -181,12 +218,14 @@
             color: #991b1b;
         }
 
+        /* EMPTY STATE */
         .empty-state {
             padding: 30px;
             text-align: center;
             color: #64748b;
         }
 
+        /* PAGINATION */
         .pagination {
             display: flex;
             justify-content: space-between;
@@ -200,6 +239,7 @@
             font-size: 14px;
         }
 
+        /* ACTIONS */
         .actions {
             display: flex;
             gap: 8px;
@@ -207,18 +247,23 @@
             flex-wrap: wrap;
         }
 
-        @media (max-width: 600px) {
-            main {
-                margin: 20px auto;
-                padding: 0 12px;
+        /* RESPONSIVE */
+        @media (max-width: 700px) {
+            body {
+                flex-direction: column;
             }
 
-            .content {
-                padding: 18px;
+            .sidebar {
+                width: 100%;
+                padding: 20px;
             }
 
-            h1 {
-                font-size: 22px;
+            .brand {
+                margin-bottom: 20px;
+            }
+
+            .main {
+                padding: 20px;
             }
 
             .search-form {
@@ -235,11 +280,17 @@
 
 <body>
 
-    <nav>
-        <a href="{{ route('presensis.index') }}">EventHub</a>
-    </nav>
+    <aside class="sidebar">
+        <div class="brand">EventHub</div>
 
-    <main>
+        <a href="{{ route('dashboard') }}">Dashboard</a>
+        <a href="{{ route('events.index') }}">Events</a>
+        <a href="{{ route('pesertas.index') }}">Peserta</a>
+        <a href="{{ route('pendaftarans.index') }}">Pendaftaran</a>
+        <a href="{{ route('presensis.index') }}" class="active">Presensi</a>
+    </aside>
+
+    <main class="main">
         <div class="content">
             @yield('content')
         </div>

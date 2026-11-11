@@ -1,29 +1,191 @@
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Edit Event</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Event - EventHub</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            min-height: 100vh;
+            background: #f4f6fb;
+        }
+
+        .sidebar {
+            width: 240px;
+            background: #172554;
+            color: white;
+            padding: 30px 20px;
+            flex-shrink: 0;
+        }
+
+        .sidebar h2 {
+            margin-bottom: 35px;
+            font-size: 24px;
+        }
+
+        .sidebar a {
+            display: block;
+            color: #cbd5e1;
+            text-decoration: none;
+            padding: 13px 15px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+        }
+
+        .sidebar a:hover,
+        .sidebar a.active {
+            background: #2563eb;
+            color: white;
+        }
+
+        .main {
+            flex: 1;
+            padding: 40px;
+            min-width: 0;
+        }
+
+        .header {
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #172554;
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: #64748b;
+        }
+
+        .form-card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            max-width: 950px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.05);
+        }
+
+        .error-box {
+            background: #fee2e2;
+            color: #b91c1c;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .error-box ul {
+            padding-left: 20px;
+            margin-top: 8px;
+        }
+
+        .form-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        button {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 12px 22px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+
+        .back {
+            color: #64748b;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .back:hover {
+            color: #2563eb;
+        }
+
+        @media (max-width: 700px) {
+            body {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+            }
+
+            .main {
+                padding: 20px;
+            }
+
+            .form-card {
+                padding: 20px;
+            }
+        }
+    </style>
 </head>
+
 <body>
-<h1>Edit Event</h1>
 
-@if($errors->any())
-    <ul style="color:red">
-        @foreach($errors->all() as $error)
-            <li>{{ $error }}</li>
-        @endforeach
-    </ul>
-@endif
+    <aside class="sidebar">
+        <h2>EventHub</h2>
 
-<form action="{{ route('events.update', $event->id) }}" method="POST">
-    @csrf
-    @method('PUT')
+        <a href="{{ route('dashboard') }}">Dashboard</a>
+        <a href="{{ route('events.index') }}" class="active">Events</a>
+        <a href="{{ route('pesertas.index') }}">Peserta</a>
+        <a href="{{ route('pendaftarans.index') }}">Pendaftaran</a>
+        <a href="{{ route('presensis.index') }}">Presensi</a>
+    </aside>
 
-    @include('events.form')
+    <main class="main">
 
-    <button type="submit">Simpan Perubahan</button>
-    <a href="{{ route('events.index') }}">Kembali</a>
-</form>
+        <div class="header">
+            <h1>Edit Event</h1>
+            <p>Perbarui informasi event yang sudah terdaftar.</p>
+        </div>
+
+        <div class="form-card">
+
+            @if($errors->any())
+                <div class="error-box">
+                    <strong>Terjadi kesalahan:</strong>
+                    <ul>
+                        @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
+            <form action="{{ route('events.update', $event->id) }}" method="POST">
+                @csrf
+                @method('PUT')
+
+                @include('events.form')
+
+                <div class="form-actions">
+                    <button type="submit">Simpan Perubahan</button>
+                    <a href="{{ route('events.index') }}" class="back">Kembali</a>
+                </div>
+            </form>
+
+        </div>
+
+    </main>
+
 </body>
 </html>
