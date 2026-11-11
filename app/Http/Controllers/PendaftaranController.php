@@ -13,12 +13,21 @@ use App\Models\Event;
 
 class PendaftaranController extends Controller
 {
-    public function index()
-    {
-        $pendaftarans = Pendaftaran::all();
+    
+public function index(Request $request)
+{
+    $sort = $request->query('sort', 'terbaru');
 
-        return view('pendaftarans.index', compact('pendaftarans'));
-    }
+    $pendaftarans = Pendaftaran::with(['peserta', 'event'])
+        ->orderBy(
+            'tanggal_daftar',
+            $sort === 'terlama' ? 'asc' : 'desc'
+        )
+        ->get();
+
+    return view('pendaftarans.index', compact('pendaftarans', 'sort'));
+}
+
 
     public function create()
     {

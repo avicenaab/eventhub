@@ -247,7 +247,14 @@
         input[type="text"] {
             width: 230px;
         }
-
+        select {
+    padding: 10px;
+    border: 1px solid #dbe2ea;
+    border-radius: 8px;
+    background: white;
+    font-size: 13px;
+    cursor: pointer;
+}
         /* TABLE */
         .table-wrapper {
             overflow-x: auto;
@@ -523,99 +530,92 @@
             </div>
 
             <!-- SEARCH -->
-            <div style="margin-bottom: 17px;">
-                <input type="text"
-                       id="searchTable"
-                       placeholder="Cari peserta atau event..."
-                       onkeyup="searchTable()">
-            </div>
+            <!-- SEARCH DAN SORTIR -->
+<div style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 17px;">
 
-            <!-- TABLE -->
-            <div class="table-wrapper">
-                <table id="pendaftaranTable">
+    <input type="text"
+           id="searchTable"
+           placeholder="Cari peserta atau event..."
+           onkeyup="searchTable()">
 
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Tanggal Daftar</th>
-                            <th>Nama Peserta</th>
-                            <th>Nama Event</th>
-                            <th>Status Pendaftaran</th>
-                            <th>Status Pembayaran</th>
-                            <th>Aksi</th>
-                        </tr>
-                    </thead>
+    <form action="{{ route('pendaftarans.index') }}" method="GET">
+        <select name="sort" onchange="this.form.submit()">
+            <option value="terbaru" {{ ($sort ?? 'terbaru') == 'terbaru' ? 'selected' : '' }}>
+                Tanggal Terbaru
+            </option>
 
-                    <tbody>
-                        @forelse ($pendaftarans as $pendaftaran)
-                            <tr>
-                                <td>#{{ $pendaftaran->id }}</td>
+            <option value="terlama" {{ ($sort ?? 'terbaru') == 'terlama' ? 'selected' : '' }}>
+                Tanggal Terlama
+            </option>
+        </select>
+    </form>
 
-                                <td>{{ $pendaftaran->tanggal_daftar }}</td>
+</div>
 
-                                <td>
-                                    <strong>
-                                        {{ $pendaftaran->peserta->nama ?? '-' }}
-                                    </strong>
-                                </td>
+<!-- TABLE -->
+<div class="table-wrapper">
+    <table id="pendaftaranTable">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Tanggal Daftar</th>
+                <th>Nama Peserta</th>
+                <th>Nama Event</th>
+                <th>Status Pendaftaran</th>
+                <th>Status Pembayaran</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
 
-                                <td>
-                                    {{ $pendaftaran->event->nama_event ?? '-' }}
-                                </td>
+        <tbody>
+            @forelse ($pendaftarans as $pendaftaran)
+                <tr>
+                    <td>#{{ $pendaftaran->id }}</td>
+                    <td>{{ $pendaftaran->tanggal_daftar }}</td>
+                    <td>{{ $pendaftaran->peserta->nama ?? '-' }}</td>
+                    <td>{{ $pendaftaran->event->nama_event ?? '-' }}</td>
 
-                                <td>
-                                    @php
-                                        $status = strtolower($pendaftaran->status_pendaftaran);
-                                    @endphp
+                    <td>
+                        <span class="badge {{ strtolower($pendaftaran->status_pendaftaran) }}">
+                            {{ ucfirst($pendaftaran->status_pendaftaran) }}
+                        </span>
+                    </td>
 
-                                    <span class="badge {{ $status }}">
-                                        {{ ucfirst($pendaftaran->status_pendaftaran) }}
-                                    </span>
-                                </td>
+                    <td>
+                        <span class="badge {{ strtolower($pendaftaran->status_pembayaran) }}">
+                            {{ str_replace('_', ' ', ucfirst($pendaftaran->status_pembayaran)) }}
+                        </span>
+                    </td>
 
-                                <td>
-                                    @php
-                                        $pembayaran = strtolower($pendaftaran->status_pembayaran);
-                                    @endphp
+                    <td>
+                        <div class="action">
+                            <a href="{{ route('pendaftarans.edit', $pendaftaran->id) }}"
+                               class="btn btn-gray">Edit</a>
 
-                                    <span class="badge {{ $pembayaran }}">
-                                        {{ str_replace('_', ' ', ucfirst($pembayaran)) }}
-                                    </span>
-                                </td>
+                            <form action="{{ route('pendaftarans.destroy', $pendaftaran->id) }}"
+                                  method="POST"
+                                  onsubmit="return confirm('Yakin ingin menghapus data ini?')">
+                                @csrf
+                                @method('DELETE')
 
-                                <td>
-                                    <div class="action">
-                                        <a href="{{ route('pendaftarans.edit', $pendaftaran->id) }}"
-                                           class="btn btn-gray">
-                                            Edit
-                                        </a>
+                                <button type="submit" class="btn btn-red">
+                                    Hapus
+                                </button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            @empty
+                <tr>
+                    <td colspan="7" class="empty">
+                        Belum ada data pendaftaran.
+                    </td>
+                </tr>
+            @endforelse
+        </tbody>
+    </table>
+</div>
 
-                                        <form action="{{ route('pendaftarans.destroy', $pendaftaran->id) }}"
-                                              method="POST"
-                                              onsubmit="return confirm('Yakin ingin menghapus data ini?')">
-
-                                            @csrf
-                                            @method('DELETE')
-
-                                            <button type="submit"
-                                                    class="btn btn-red">
-                                                Hapus
-                                            </button>
-                                        </form>
-                                    </div>
-                                </td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="7" class="empty">
-                                    Belum ada data pendaftaran.
-                                </td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-
-                </table>
-            </div>
 
         </section>
 
