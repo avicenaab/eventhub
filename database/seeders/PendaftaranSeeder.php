@@ -19,18 +19,10 @@ class PendaftaranSeeder extends Seeder
 
         Pendaftaran::create([
             'tanggal_daftar' => '2026-11-02',
-            'peserta_id' => 2,
+            'peserta_id' => 3,
             'event_id' => 1,
             'status_pendaftaran' => 'menunggu',
             'status_pembayaran' => 'belum_bayar',
-        ]);
-
-        Pendaftaran::create([
-            'tanggal_daftar' => '2026-11-03',
-            'peserta_id' => 1,
-            'event_id' => 2,
-            'status_pendaftaran' => 'diterima',
-            'status_pembayaran' => 'sudah_bayar',
         ]);
     }
 }

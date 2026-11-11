@@ -13,11 +13,31 @@
         <label>Tanggal Daftar</label>
         <input type="date" name="tanggal_daftar" required>
 
-        <label>ID Peserta</label>
-        <input type="number" name="peserta_id" required>
+        <br><br>
 
-        <label>ID Event</label>
-        <input type="number" name="event_id" required>
+        <label>Peserta</label>
+        <select name="peserta_id" required>
+            <option value="">-- Pilih Peserta --</option>
+            @foreach ($pesertas as $peserta)
+                <option value="{{ $peserta->id }}">
+                    {{ $peserta->nama }}
+                </option>
+            @endforeach
+        </select>
+
+        <br><br>
+
+        <label>Event</label>
+        <select name="event_id" required>
+            <option value="">-- Pilih Event --</option>
+            @foreach ($events as $event)
+                <option value="{{ $event->id }}">
+                    {{ $event->nama_event }}
+                </option>
+            @endforeach
+        </select>
+
+        <br><br>
 
         <label>Status Pendaftaran</label>
         <select name="status_pendaftaran">
@@ -26,15 +46,20 @@
             <option value="ditolak">Ditolak</option>
         </select>
 
+        <br><br>
+
         <label>Status Pembayaran</label>
         <select name="status_pembayaran">
             <option value="belum_bayar">Belum Bayar</option>
             <option value="sudah_bayar">Sudah Bayar</option>
         </select>
 
+        <br><br>
+
         <button type="submit">Simpan</button>
     </form>
 
+    <br>
     <a href="{{ route('pendaftarans.index') }}">Kembali</a>
 </body>
 </html>

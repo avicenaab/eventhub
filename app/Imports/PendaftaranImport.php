@@ -3,6 +3,8 @@
 namespace App\Imports;
 
 use App\Models\Pendaftaran;
+use App\Models\Peserta;
+use App\Models\Event;
 use Illuminate\Database\Eloquent\Model;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
@@ -16,10 +18,17 @@ class PendaftaranImport implements ToModel, WithHeadingRow
             ? Date::excelToDateTimeObject($row['tanggal_daftar'])->format('Y-m-d')
             : date('Y-m-d', strtotime($row['tanggal_daftar']));
 
+        $peserta = Peserta::where('nama', $row['nama_peserta'])->first();
+        $event = Event::where('nama_event', $row['nama_event'])->first();
+
+        if (!$peserta || !$event) {
+            throw new \Exception('Nama peserta atau event tidak ditemukan.');
+        }
+
         return new Pendaftaran([
             'tanggal_daftar' => $tanggal,
-            'peserta_id' => $row['id_peserta'],
-            'event_id' => $row['id_event'],
+            'peserta_id' => $peserta->id,
+            'event_id' => $event->id,
             'status_pendaftaran' => $row['status_pendaftaran'],
             'status_pembayaran' => $row['status_pembayaran'],
         ]);

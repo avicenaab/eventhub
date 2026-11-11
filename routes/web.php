@@ -5,6 +5,9 @@ use App\Http\Controllers\PendaftaranController;
 use App\Http\Controllers\PresensiController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\PesertaController;
+use App\Http\Controllers\DashboardController;
+
+Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
 // Route untuk fitur Peserta milik Kay
 Route::resource('pesertas', PesertaController::class);

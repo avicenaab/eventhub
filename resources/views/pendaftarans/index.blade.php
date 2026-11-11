@@ -63,8 +63,8 @@
             <tr>
                 <td>{{ $pendaftaran->id }}</td>
                 <td>{{ $pendaftaran->tanggal_daftar }}</td>
-                <td>{{ $pendaftaran->peserta_id }}</td>
-                <td>{{ $pendaftaran->event_id }}</td>
+                <td>{{ $pendaftaran->peserta->nama ?? '-' }}</td>
+                <td>{{ $pendaftaran->event->nama_event ?? '-' }}</td>
                 <td>{{ $pendaftaran->status_pendaftaran }}</td>
                 <td>{{ $pendaftaran->status_pembayaran }}</td>
 

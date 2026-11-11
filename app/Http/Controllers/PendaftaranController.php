@@ -8,6 +8,8 @@ use App\Exports\PendaftaranExport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\PendaftaranImport;
 use Barryvdh\DomPDF\Facade\Pdf;
+use App\Models\Peserta;
+use App\Models\Event;
 
 class PendaftaranController extends Controller
 {
@@ -20,7 +22,13 @@ class PendaftaranController extends Controller
 
     public function create()
     {
-        return view('pendaftarans.create');
+    $pesertas = Peserta::all();
+    $events = Event::all();
+
+    return view('pendaftarans.create', compact(
+        'pesertas',
+        'events'
+    ));
     }
 
     public function store(Request $request)
@@ -100,7 +108,7 @@ class PendaftaranController extends Controller
 }
     public function pdf()
 {
-    $pendaftarans = Pendaftaran::all();
+    $pendaftarans = Pendaftaran::with(['peserta', 'event'])->get();
 
     $pdf = Pdf::loadView('pendaftarans.pdf', compact('pendaftarans'));
 
