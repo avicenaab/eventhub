@@ -77,7 +77,6 @@
 
         .legacy-module-page .topbar h1 {
             font-size: 27px;
-            color: #172554;
         }
 
         .legacy-module-page .topbar p {
@@ -278,13 +277,8 @@ body { display:block !important; min-height:100vh; background:var(--bg) !importa
 @section('content')
 <div class="legacy-module-page">
 <div class="topbar">
-            <div class="breadcrumb">
-                <a href="{{ route('pendaftarans.index') }}">Pendaftaran</a>
-                / Tambah Pendaftaran
-            </div>
 
             <h1>Tambah Pendaftaran</h1>
-            <p>Masukkan informasi peserta dan event yang ingin didaftarkan.</p>
         </div>
 
         @if($pesertas->isEmpty() || $events->isEmpty())

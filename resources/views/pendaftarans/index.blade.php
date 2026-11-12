@@ -35,8 +35,6 @@
                 <h1>Data Pendaftaran</h1>
                 <p>Kelola seluruh pendaftaran event dalam satu tempat.</p>
             </div>
-
-            <div class="profile">Admin EventHub</div>
         </div>
 
         <!-- ALERT -->

@@ -11,7 +11,7 @@
 @endpush
 <section class="public-section detail-layout">
     <article class="detail-main">
-        <a class="text-link" href="{{ route('public.events.index') }}">← Semua event</a>
+        <a class="text-link" href="{{ route('public.events.index') }}">← Semua event</a>~
         <p class="eyebrow">EVENT DETAIL</p>
         <h1>{{ $event->nama_event }}</h1>
         <p class="lead">{{ $event->deskripsi }}</p>

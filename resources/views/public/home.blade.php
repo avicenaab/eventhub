@@ -9,10 +9,6 @@
         <input name="q" placeholder="Cari event atau lokasi...">
         <button class="btn primary">Jelajahi</button>
     </form>
-    <div class="hero-meta">
-        <span>● Pendaftaran mudah</span>
-        <span>● Tanpa perlu membuat akun</span>
-    </div>
 </section>
 <section class="public-section">
     <div class="section-heading">

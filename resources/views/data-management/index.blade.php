@@ -47,5 +47,4 @@
     </section>
     @endforeach
 </div>
-<p class="tiny muted">Import akan memvalidasi tiap baris. Pastikan format kolom sesuai dengan file hasil export. Lakukan backup database sebelum import data dalam jumlah besar.</p>
 @endsection

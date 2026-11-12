@@ -25,7 +25,6 @@
                 <strong>Pilih titik lokasi di peta</strong>
                 <small>Pilih hasil pencarian, klik peta, atau geser marker untuk menentukan titik yang tepat.</small>
             </div>
-            <span class="map-provider-label">Photon · Leaflet · OpenStreetMap</span>
         </div>
 
         <div class="map-search-wrap">
@@ -52,7 +51,6 @@
         </small>
         @error('latitude')<small class="field-error">{{ $message }}</small>@enderror
         @error('longitude')<small class="field-error">{{ $message }}</small>@enderror
-        <small class="map-attribution-note">Pencarian oleh <a href="https://photon.komoot.io/" target="_blank" rel="noopener noreferrer">Photon</a> · Peta © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap contributors</a></small>
     </div>
 
     <label class="field full-width">

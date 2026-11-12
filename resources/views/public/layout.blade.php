@@ -23,7 +23,6 @@
         <main>@yield('content')</main>
         <footer class="public-footer">
             <span>© {{ date('Y') }} EventHub</span>
-            <span>Temukan kegiatan. Buat pengalaman.</span>
         </footer>
         @stack('scripts')
     </body>

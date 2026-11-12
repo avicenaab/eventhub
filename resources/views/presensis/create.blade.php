@@ -12,7 +12,6 @@
 
 <div class="page-header">
     <h1>Tambah Presensi</h1>
-    <p>Tambahkan data kehadiran peserta EventHub.</p>
 </div>
 
 @if($errors->any())

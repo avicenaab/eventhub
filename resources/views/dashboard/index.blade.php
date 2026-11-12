@@ -5,7 +5,7 @@
     <div>
         <p class="eyebrow">OVERVIEW</p>
         <h1>Dashboard</h1>
-        <p class="muted">Ringkasan aktivitas EventHub hari ini.</p>
+        <p class="muted">Ringkasan aktivitas EventHub.</p>
     </div><a class="btn primary" href="{{ route('events.create') }}">＋ Buat event</a>
 </div>
 <div class="stats-grid">
