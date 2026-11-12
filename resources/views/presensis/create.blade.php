@@ -1,127 +1,14 @@
-@extends('presensis.layout')
+@extends('layouts.admin')
 
 @section('title', 'Tambah Presensi')
 
 @section('content')
+<div class="presensi-page">
+<div class="legacy-module-page">
+@push('styles')
+@endpush
 
-<style>
-    .page-header {
-        margin-bottom: 25px;
-    }
 
-    .page-header h1 {
-        color: #172554;
-        font-size: 28px;
-        margin-bottom: 8px;
-    }
-
-    .page-header p {
-        color: #64748b;
-    }
-
-    .presensi-card {
-        background: white;
-        max-width: 850px;
-        padding: 30px;
-        border-radius: 12px;
-        box-shadow: 0 3px 12px rgba(0,0,0,0.05);
-        margin-top: 20px;
-    }
-
-    .presensi-form {
-        display: flex;
-        flex-direction: column;
-        gap: 22px;
-    }
-
-    .presensi-form .form-group {
-        display: flex;
-        flex-direction: column;
-        gap: 9px;
-    }
-
-    .presensi-form label {
-        color: #334155;
-        font-size: 14px;
-        font-weight: 600;
-    }
-
-    .presensi-form input,
-    .presensi-form select {
-        width: 100%;
-        padding: 12px 14px;
-        border: 1px solid #cbd5e1;
-        border-radius: 8px;
-        background: white;
-        color: #1e293b;
-        font-size: 14px;
-        outline: none;
-    }
-
-    .presensi-form input:focus,
-    .presensi-form select:focus {
-        border-color: #2563eb;
-        box-shadow: 0 0 0 3px rgba(37,99,235,0.12);
-    }
-
-    .form-actions {
-        display: flex;
-        gap: 12px;
-        margin-top: 5px;
-    }
-
-    .btn-save {
-        background: #2563eb;
-        color: white;
-        border: none;
-        padding: 12px 20px;
-        border-radius: 8px;
-        cursor: pointer;
-        font-weight: bold;
-        text-decoration: none;
-    }
-
-    .btn-save:hover {
-        background: #1d4ed8;
-    }
-
-    .btn-cancel {
-        background: #e2e8f0;
-        color: #334155;
-        padding: 12px 20px;
-        border-radius: 8px;
-        text-decoration: none;
-        font-weight: bold;
-    }
-
-    .btn-cancel:hover {
-        background: #cbd5e1;
-    }
-
-    .empty-state {
-        background: white;
-        max-width: 850px;
-        padding: 35px;
-        border-radius: 12px;
-        text-align: center;
-        margin-top: 20px;
-        color: #64748b;
-    }
-
-    .empty-state h3 {
-        color: #172554;
-        margin-bottom: 10px;
-    }
-
-    .alert-error {
-        background: #fee2e2;
-        color: #b91c1c;
-        padding: 15px 20px;
-        border-radius: 8px;
-        margin-bottom: 20px;
-        max-width: 850px;
-    }
-</style>
 
 <div class="page-header">
     <h1>Tambah Presensi</h1>
@@ -217,4 +104,6 @@
 
 @endif
 
+</div>
+</div>
 @endsection

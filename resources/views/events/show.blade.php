@@ -1,226 +1,18 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detail Event - EventHub</title>
+@extends('layouts.admin')
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
+@section('title', 'Events')
 
-        body {
-            display: flex;
-            min-height: 100vh;
-            background: #f4f6fb;
-        }
-
-        .sidebar {
-            width: 240px;
-            background: #172554;
-            color: white;
-            padding: 30px 20px;
-            flex-shrink: 0;
-        }
-
-        .sidebar h2 {
-            font-size: 24px;
-            margin-bottom: 35px;
-        }
-
-        .sidebar a {
-            display: block;
-            color: #cbd5e1;
-            text-decoration: none;
-            padding: 13px 15px;
-            margin-bottom: 8px;
-            border-radius: 8px;
-        }
-
-        .sidebar a:hover,
-        .sidebar a.active {
-            background: #2563eb;
-            color: white;
-        }
-
-        .main {
-            flex: 1;
-            min-width: 0;
-            padding: 40px;
-        }
-
-        .header {
-            margin-bottom: 30px;
-        }
-
-        .header h1 {
-            font-size: 28px;
-            color: #172554;
-            margin-bottom: 8px;
-        }
-
-        .header p {
-            color: #64748b;
-        }
-
-        .detail-card {
-            background: white;
-            max-width: 950px;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 3px 12px rgba(0,0,0,0.05);
-        }
-
-        .event-title {
-            padding-bottom: 25px;
-            border-bottom: 1px solid #e2e8f0;
-            margin-bottom: 25px;
-        }
-
-        .event-title h2 {
-            font-size: 23px;
-            color: #172554;
-            margin-bottom: 12px;
-        }
-
-        .status {
-            display: inline-block;
-            padding: 6px 13px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: bold;
-            text-transform: capitalize;
-        }
-
-        .status.aktif {
-            background: #dcfce7;
-            color: #15803d;
-        }
-
-        .status.draft {
-            background: #fef3c7;
-            color: #92400e;
-        }
-
-        .status.selesai {
-            background: #e2e8f0;
-            color: #475569;
-        }
-
-        .detail-grid {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 25px;
-        }
-
-        .detail-item {
-            padding: 15px;
-            background: #f8fafc;
-            border-radius: 9px;
-        }
-
-        .detail-item.full {
-            grid-column: 1 / -1;
-        }
-
-        .detail-item label {
-            display: block;
-            color: #64748b;
-            font-size: 13px;
-            margin-bottom: 9px;
-        }
-
-        .detail-item p {
-            color: #1e293b;
-            font-size: 15px;
-            font-weight: 600;
-            overflow-wrap: anywhere;
-        }
-
-        .description {
-            font-weight: normal !important;
-            line-height: 1.7;
-            white-space: pre-line;
-        }
-
-        .actions {
-            display: flex;
-            gap: 12px;
-            margin-top: 30px;
-            padding-top: 25px;
-            border-top: 1px solid #e2e8f0;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 11px 20px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: bold;
-        }
-
-        .btn-edit {
-            background: #2563eb;
-            color: white;
-        }
-
-        .btn-edit:hover {
-            background: #1d4ed8;
-        }
-
-        .btn-back {
-            background: #e2e8f0;
-            color: #334155;
-        }
-
-        .btn-back:hover {
-            background: #cbd5e1;
-        }
-
-        @media (max-width: 700px) {
-            body {
-                flex-direction: column;
-            }
-
-            .sidebar {
-                width: 100%;
-            }
-
-            .main {
-                padding: 20px;
-            }
-
-            .detail-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .detail-item.full {
-                grid-column: auto;
-            }
-        }
-    </style>
-</head>
-
-<body>
-
-    <aside class="sidebar">
-        <h2>EventHub</h2>
-
-        <a href="{{ route('dashboard') }}">Dashboard</a>
-        <a href="{{ route('events.index') }}" class="active">Events</a>
-        <a href="{{ route('pesertas.index') }}">Peserta</a>
-        <a href="{{ route('pendaftarans.index') }}">Pendaftaran</a>
-        <a href="{{ route('presensis.index') }}">Presensi</a>
-    </aside>
-
-    <main class="main">
-
-        <div class="header">
+@section('content')
+@push('styles')
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+<style>.event-detail-map{height:320px;width:100%;border-radius:12px;overflow:hidden;background:#252525}.map-attribution-note{display:block;text-align:right;color:#9ca3af;font-size:10px;margin-top:6px}.map-attribution-note a{color:#9ca3af}</style>
+@endpush
+@push('scripts')
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script>document.addEventListener('DOMContentLoaded',()=>{const el=document.getElementById('event-detail-map');if(!el||typeof L==='undefined')return;const point=[Number(el.dataset.latitude),Number(el.dataset.longitude)];const map=L.map(el,{scrollWheelZoom:false}).setView(point,15);L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);L.marker(point).addTo(map);});</script>
+@endpush
+<div class="legacy-module-page">
+<div class="header">
             <h1>Detail Event</h1>
             <p>Informasi lengkap mengenai event yang terdaftar di EventHub.</p>
         </div>
@@ -257,6 +49,16 @@
                     <p>{{ $event->lokasi }}</p>
                 </div>
 
+                @if($event->latitude !== null && $event->longitude !== null)
+                    <div class="detail-item full">
+                        <label>Lokasi pada Peta</label>
+                        <div id="event-detail-map" class="event-detail-map" data-latitude="{{ $event->latitude }}" data-longitude="{{ $event->longitude }}"></div>
+                        <small class="map-attribution-note">© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap contributors</a></small>
+                    </div>
+                @else
+                    <div class="detail-item full"><label>Lokasi pada Peta</label><p>Koordinat peta belum ditambahkan untuk event ini.</p></div>
+                @endif
+
                 <div class="detail-item">
                     <label>Kuota Peserta</label>
                     <p>{{ $event->kuota }} Peserta</p>
@@ -283,10 +85,6 @@
                     Kembali
                 </a>
             </div>
+</div>
+@endsection
 
-        </div>
-
-    </main>
-
-</body>
-</html>

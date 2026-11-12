@@ -16,16 +16,26 @@ class PendaftaranController extends Controller
     
 public function index(Request $request)
 {
-    $sort = $request->query('sort', 'terbaru');
+    $filters = $request->validate([
+        'search' => ['nullable', 'string', 'max:100'],
+        'sort' => ['nullable', 'in:terbaru,terlama'],
+    ]);
+    $sort = $filters['sort'] ?? 'terbaru';
 
-    $pendaftarans = Pendaftaran::with(['peserta', 'event'])
-        ->orderBy(
-            'tanggal_daftar',
-            $sort === 'terlama' ? 'asc' : 'desc'
-        )
-        ->get();
+    $query = Pendaftaran::with(['peserta', 'event'])
+        ->when($filters['search'] ?? null, function ($query, $search) {
+            $query->where(function ($q) use ($search) {
+                $q->whereHas('peserta', fn ($peserta) => $peserta->where('nama', 'like', "%{$search}%"))
+                    ->orWhereHas('event', fn ($event) => $event->where('nama_event', 'like', "%{$search}%"));
+            });
+        });
 
-    return view('pendaftarans.index', compact('pendaftarans', 'sort'));
+    $totalPendaftaran = (clone $query)->count();
+    $menunggu = (clone $query)->where('status_pendaftaran', 'menunggu')->count();
+    $pendaftarans = $query->orderBy('tanggal_daftar', $sort === 'terlama' ? 'asc' : 'desc')
+        ->paginate(10)->withQueryString();
+
+    return view('pendaftarans.index', compact('pendaftarans', 'sort', 'totalPendaftaran', 'menunggu'));
 }
 
 

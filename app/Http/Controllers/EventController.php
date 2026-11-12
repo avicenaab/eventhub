@@ -8,11 +8,13 @@ use Illuminate\Database\QueryException;
 
 class EventController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $events = Event::latest()->paginate(10);
+        $sort = $request->query('sort', 'terbaru');
+        $direction = $sort === 'terlama' ? 'asc' : 'desc';
+        $events = Event::orderBy('tanggal_mulai', $direction)->paginate(10)->withQueryString();
 
-        return view('events.index', compact('events'));
+        return view('events.index', compact('events', 'sort'));
     }
 
     public function create()
@@ -28,9 +30,11 @@ class EventController extends Controller
             'tanggal_mulai' => 'required|date',
             'tanggal_selesai' => 'nullable|date|after_or_equal:tanggal_mulai',
             'lokasi' => 'required|string|max:255',
+            'latitude' => ['nullable', 'numeric', 'between:-90,90'],
+            'longitude' => ['nullable', 'numeric', 'between:-180,180'],
             'kuota' => 'required|integer|min:1',
             'biaya' => 'required|numeric|min:0',
-            'status_event' => 'required|in:draft,aktif,selesai',
+            'status_event' => 'required|in:draft,aktif,berlangsung,selesai',
         ]);
 
         Event::create($validated);
@@ -57,9 +61,11 @@ class EventController extends Controller
             'tanggal_mulai' => 'required|date',
             'tanggal_selesai' => 'nullable|date|after_or_equal:tanggal_mulai',
             'lokasi' => 'required|string|max:255',
+            'latitude' => ['nullable', 'numeric', 'between:-90,90'],
+            'longitude' => ['nullable', 'numeric', 'between:-180,180'],
             'kuota' => 'required|integer|min:1',
             'biaya' => 'required|numeric|min:0',
-            'status_event' => 'required|in:draft,aktif,selesai',
+            'status_event' => 'required|in:draft,aktif,berlangsung,selesai',
         ]);
 
         $event->update($validated);

@@ -10,6 +10,8 @@ use App\Models\Presensi;
 class Pendaftaran extends Model
 {
     protected $fillable = [
+        'public_token',
+        'attendance_code',
         'tanggal_daftar',
         'peserta_id',
         'event_id',

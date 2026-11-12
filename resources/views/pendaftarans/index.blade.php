@@ -1,440 +1,36 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pendaftaran - EventHub</title>
-
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            background: #f4f6fb;
-            color: #1e293b;
-        }
-
-        .layout {
-            display: flex;
-            min-height: 100vh;
-        }
-
-        /* SIDEBAR */
-        .sidebar {
-            width: 245px;
-            background: #172554;
-            color: white;
-            padding: 28px 18px;
-            flex-shrink: 0;
-        }
-
-        .brand {
-            font-size: 25px;
-            font-weight: 800;
-            padding: 0 12px;
-            margin-bottom: 45px;
-            letter-spacing: -1px;
-        }
-
-        .brand span {
-            color: #60a5fa;
-        }
-
-        .menu-label {
-            font-size: 11px;
-            color: #94a3b8;
-            letter-spacing: 1.5px;
-            margin: 25px 12px 12px;
-        }
-
-        .menu a {
-            display: block;
-            color: #cbd5e1;
-            text-decoration: none;
-            padding: 13px 14px;
-            border-radius: 9px;
-            margin-bottom: 7px;
-            font-size: 14px;
-            transition: .2s;
-        }
-
-        .menu a:hover,
-        .menu a.active {
-            background: #2563eb;
-            color: white;
-        }
-
-        /* MAIN CONTENT */
-        .main {
-            flex: 1;
-            padding: 35px;
-            min-width: 0;
-        }
-
-        .topbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-            gap: 15px;
-        }
-
-        .topbar h1 {
-            font-size: 27px;
-            color: #172554;
-        }
-
-        .topbar p {
-            color: #64748b;
-            font-size: 14px;
-            margin-top: 6px;
-        }
-
-        .profile {
-            background: white;
-            padding: 10px 16px;
-            border-radius: 10px;
-            font-size: 13px;
-            font-weight: 600;
-            box-shadow: 0 2px 10px #00000008;
-        }
-
-        /* STATISTICS */
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 20px;
-            margin-bottom: 25px;
-        }
-
-        .stat-card {
-            background: white;
-            padding: 23px;
-            border-radius: 13px;
-            box-shadow: 0 3px 15px #00000008;
-            border: 1px solid #edf0f5;
-        }
-
-        .stat-card p {
-            color: #64748b;
-            font-size: 13px;
-            margin-bottom: 12px;
-        }
-
-        .stat-card h2 {
-            font-size: 29px;
-            color: #172554;
-        }
-
-        .stat-icon {
-            font-size: 23px;
-            margin-bottom: 12px;
-        }
-
-        /* CONTENT CARD */
-        .content-card {
-            background: white;
-            border-radius: 14px;
-            padding: 25px;
-            box-shadow: 0 3px 15px #00000008;
-            border: 1px solid #edf0f5;
-        }
-
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 22px;
-        }
-
-        .section-header h2 {
-            font-size: 19px;
-            color: #172554;
-        }
-
-        .section-header p {
-            font-size: 13px;
-            color: #94a3b8;
-            margin-top: 5px;
-        }
-
-        /* BUTTONS */
-        .btn {
-            display: inline-block;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 8px;
-            font-size: 13px;
-            font-weight: 600;
-            text-decoration: none;
-            cursor: pointer;
-            transition: .2s;
-        }
-
-        .btn:hover {
-            opacity: .85;
-            transform: translateY(-1px);
-        }
-
-        .btn-primary {
-            background: #2563eb;
-            color: white;
-        }
-
-        .btn-green {
-            background: #dcfce7;
-            color: #15803d;
-        }
-
-        .btn-red {
-            background: #fee2e2;
-            color: #b91c1c;
-        }
-
-        .btn-purple {
-            background: #ede9fe;
-            color: #6d28d9;
-        }
-
-        .btn-gray {
-            background: #e2e8f0;
-            color: #334155;
-        }
-
-        .toolbar {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 9px;
-            margin-bottom: 20px;
-        }
-
-        /* IMPORT */
-        .import-box {
-            background: #f8fafc;
-            border: 1px dashed #cbd5e1;
-            padding: 17px;
-            border-radius: 10px;
-            margin-bottom: 25px;
-        }
-
-        .import-box label {
-            display: block;
-            font-size: 13px;
-            font-weight: 600;
-            margin-bottom: 10px;
-        }
-
-        .import-form {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        input[type="file"],
-        input[type="text"] {
-            padding: 10px;
-            border: 1px solid #dbe2ea;
-            border-radius: 8px;
-            background: white;
-            font-size: 13px;
-        }
-
-        input[type="text"] {
-            width: 230px;
-        }
-        select {
-    padding: 10px;
-    border: 1px solid #dbe2ea;
-    border-radius: 8px;
-    background: white;
-    font-size: 13px;
-    cursor: pointer;
-}
-        /* TABLE */
-        .table-wrapper {
-            overflow-x: auto;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            white-space: nowrap;
-        }
-
-        th {
-            background: #f1f5f9;
-            color: #475569;
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: .4px;
-            padding: 15px 13px;
-            text-align: left;
-        }
-
-        td {
-            padding: 15px 13px;
-            border-bottom: 1px solid #edf0f5;
-            font-size: 13px;
-        }
-
-        tr:hover td {
-            background: #f8fafc;
-        }
-
-        .badge {
-            display: inline-block;
-            padding: 6px 10px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: 700;
-        }
-
-        .menunggu {
-            background: #fef3c7;
-            color: #92400e;
-        }
-
-        .diterima {
-            background: #dcfce7;
-            color: #166534;
-        }
-
-        .ditolak {
-            background: #fee2e2;
-            color: #991b1b;
-        }
-
-        .belum_bayar {
-            background: #fef3c7;
-            color: #92400e;
-        }
-
-        .sudah_bayar {
-            background: #dbeafe;
-            color: #1d4ed8;
-        }
-
-        .action {
-            display: flex;
-            align-items: center;
-            gap: 7px;
-        }
-
-        .action form {
-            display: inline;
-        }
-
-        .action button {
-            font-family: inherit;
-        }
-
-        .alert {
-            padding: 13px 16px;
-            border-radius: 9px;
-            margin-bottom: 18px;
-            font-size: 13px;
-        }
-
-        .alert-success {
-            background: #dcfce7;
-            color: #166534;
-        }
-
-        .alert-error {
-            background: #fee2e2;
-            color: #991b1b;
-        }
-
-        .empty {
-            text-align: center;
-            color: #94a3b8;
-            padding: 35px;
-        }
-
-        .footer {
-            text-align: center;
-            color: #94a3b8;
-            font-size: 12px;
-            margin-top: 25px;
-        }
-
-        @media (max-width: 850px) {
-            .sidebar {
-                width: 180px;
-            }
-
-            .main {
-                padding: 20px;
-            }
-        }
-
-        @media (max-width: 600px) {
-            .layout {
-                display: block;
-            }
-
-            .sidebar {
-                width: 100%;
-                padding: 15px;
-            }
-
-            .brand {
-                margin-bottom: 15px;
-            }
-
-            .menu {
-                display: flex;
-                flex-wrap: wrap;
-            }
-
-            .menu-label {
-                display: none;
-            }
-
-            .menu a {
-                padding: 9px 11px;
-            }
-
-            .stats {
-                grid-template-columns: 1fr;
-            }
-
-            .topbar,
-            .section-header {
-                align-items: flex-start;
-                flex-direction: column;
-            }
-        }
-    </style>
-</head>
-
-<body>
-<div class="layout">
-
-    <!-- SIDEBAR -->
-    <aside class="sidebar">
-        <div class="brand">Event<span>Hub.</span></div>
-
-        <div class="menu-label">MENU UTAMA</div>
-
-        <nav class="menu">
-            <a href="{{ url('/') }}">⌂ Dashboard</a>
-            <a href="{{ route('events.index') }}">▣ Events</a>
-            <a href="{{ route('pesertas.index') }}">♙ Peserta</a>
-            <a href="{{ route('pendaftarans.index') }}" class="active">▤ Pendaftaran</a>
-            <a href="{{ route('presensis.index') }}">◷ Presensi</a>
-        </nav>
-    </aside>
-
-    <!-- MAIN -->
-    <main class="main">
-
-        <div class="topbar">
+@extends('layouts.admin')
+
+@section('title', 'Pendaftaran')
+
+@push('styles')
+<style>
+.legacy-module-page{color:var(--text);width:100%;}
+.legacy-module-page .topbar{display:flex;justify-content:space-between;align-items:center;gap:16px;margin:0 0 24px;padding:0 0 18px;border-bottom:1px solid var(--border);}
+.legacy-module-page .topbar h1{color:var(--text);font-size:28px;margin:0 0 6px;}
+.legacy-module-page .topbar p,.legacy-module-page .section-header p{color:var(--muted);}
+.legacy-module-page .profile,.legacy-module-page .stat-card,.legacy-module-page .content-card{background:var(--surface);color:var(--text);border:1px solid var(--border);box-shadow:none;border-radius:14px;}
+.legacy-module-page .stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-bottom:22px;}
+.legacy-module-page .stat-card{padding:22px;}.legacy-module-page .stat-card p{color:var(--muted);}.legacy-module-page .stat-card h2,.legacy-module-page .section-header h2{color:var(--text);}
+.legacy-module-page .content-card{padding:22px;}.legacy-module-page .section-header{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:18px;}
+.legacy-module-page .toolbar{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:18px;}
+.legacy-module-page input,.legacy-module-page select{background:var(--surface-2);color:var(--text);border:1px solid var(--border);border-radius:9px;padding:11px 13px;}
+.legacy-module-page .table-wrapper{overflow-x:auto;}.legacy-module-page table{width:100%;border-collapse:collapse;min-width:760px;}
+.legacy-module-page th{background:var(--surface-2);color:var(--muted);font-size:12px;text-align:left;letter-spacing:.03em;}
+.legacy-module-page td,.legacy-module-page th{padding:13px 14px;border-bottom:1px solid var(--border);color:var(--text);}
+.legacy-module-page tr:hover td{background:rgba(255,255,255,.025);}
+.legacy-module-page .btn{display:inline-flex;align-items:center;justify-content:center;padding:10px 14px;border-radius:9px;font-weight:600;border:1px solid transparent;cursor:pointer;}
+.legacy-module-page .btn-primary{background:var(--teal);color:#10201e;}.legacy-module-page .btn-green{background:rgba(85,214,194,.14);color:var(--teal);}.legacy-module-page .btn-purple{background:rgba(180,154,255,.14);color:var(--purple);}.legacy-module-page .btn-gray{background:var(--surface-2);color:var(--text);border-color:var(--border);}.legacy-module-page .btn-red{background:rgba(239,119,119,.14);color:var(--red);}
+.legacy-module-page .badge{display:inline-flex;padding:5px 10px;border-radius:999px;background:var(--surface-2);color:var(--text);font-size:12px;}
+.legacy-module-page .action{display:flex;align-items:center;gap:7px;}.legacy-module-page .action form{margin:0;}
+.legacy-module-page .alert{padding:12px 15px;border-radius:10px;margin-bottom:14px;}.legacy-module-page .alert-success{background:rgba(85,214,194,.12);color:var(--teal);}.legacy-module-page .alert-error{background:rgba(239,119,119,.12);color:var(--red);}
+@media(max-width:760px){.legacy-module-page .stats{grid-template-columns:1fr;}.legacy-module-page .section-header,.legacy-module-page .topbar{align-items:flex-start;flex-direction:column;}}
+</style>
+@endpush
+
+@section('content')
+@push('styles')<style>.th-sort{display:inline-flex;align-items:center;justify-content:center;margin-left:5px;width:22px;height:22px;border:1px solid var(--border);border-radius:6px;color:var(--muted);text-decoration:none;font-size:13px;vertical-align:middle}.th-sort:hover{color:var(--teal);border-color:var(--teal);background:var(--surface-2)}</style>@endpush
+<div class="legacy-module-page">
+<div class="topbar">
             <div>
                 <h1>Data Pendaftaran</h1>
                 <p>Kelola seluruh pendaftaran event dalam satu tempat.</p>
@@ -463,13 +59,13 @@
             <div class="stat-card">
                 <div class="stat-icon">▤</div>
                 <p>Total Pendaftaran</p>
-                <h2>{{ $pendaftarans->count() }}</h2>
+                <h2>{{ $totalPendaftaran ?? $pendaftarans->total() }}</h2>
             </div>
 
             <div class="stat-card">
                 <div class="stat-icon">◷</div>
                 <p>Pendaftaran Menunggu</p>
-                <h2>{{ $pendaftarans->where('status_pendaftaran', 'menunggu')->count() }}</h2>
+                <h2>{{ $menunggu ?? 0 }}</h2>
             </div>
         </div>
 
@@ -488,69 +84,17 @@
                 </a>
             </div>
 
-            <!-- EXPORT BUTTONS -->
             <div class="toolbar">
-                <a href="{{ route('pendaftarans.export') }}"
-                   class="btn btn-green">
-                    ↓ Export Excel
-                </a>
-
-                <a href="{{ route('pendaftarans.pdf') }}"
-                   class="btn btn-red">
-                    ↓ Export PDF
-                </a>
-
-                <a href="{{ route('pendaftarans.chart') }}"
-                   class="btn btn-purple">
-                    ▥ Lihat Grafik
-                </a>
-            </div>
-
-            <!-- IMPORT -->
-            <div class="import-box">
-                <form action="{{ route('pendaftarans.import') }}"
-                      method="POST"
-                      enctype="multipart/form-data">
-
-                    @csrf
-
-                    <label>Import Data dari Excel</label>
-
-                    <div class="import-form">
-                        <input type="file"
-                               name="file"
-                               accept=".xlsx,.xls,.csv"
-                               required>
-
-                        <button type="submit" class="btn btn-primary">
-                            ↑ Import Excel
-                        </button>
-                    </div>
-                </form>
+                <a href="{{ route('data-management.index') }}" class="btn btn-purple">⇅ Import / Export semua data</a>
+                <a href="{{ route('analytics.index') }}" class="btn btn-green">▥ Buka Analitik</a>
             </div>
 
             <!-- SEARCH -->
             <!-- SEARCH DAN SORTIR -->
-<div style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 17px;">
-
-    <input type="text"
-           id="searchTable"
-           placeholder="Cari peserta atau event..."
-           onkeyup="searchTable()">
-
-    <form action="{{ route('pendaftarans.index') }}" method="GET">
-        <select name="sort" onchange="this.form.submit()">
-            <option value="terbaru" {{ ($sort ?? 'terbaru') == 'terbaru' ? 'selected' : '' }}>
-                Tanggal Terbaru
-            </option>
-
-            <option value="terlama" {{ ($sort ?? 'terbaru') == 'terlama' ? 'selected' : '' }}>
-                Tanggal Terlama
-            </option>
-        </select>
-    </form>
-
-</div>
+<form action="{{ route('pendaftarans.index') }}" method="GET" class="toolbar">
+    <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari peserta atau event...">
+    <button type="submit" class="btn btn-gray">Terapkan</button>
+</form>
 
 <!-- TABLE -->
 <div class="table-wrapper">
@@ -558,7 +102,7 @@
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Tanggal Daftar</th>
+                <th>Tanggal Daftar <a class="th-sort" title="Urutkan tanggal" href="{{ route('pendaftarans.index', array_merge(request()->query(), ['sort' => ($sort ?? 'terbaru') === 'terbaru' ? 'terlama' : 'terbaru'])) }}">⇅</a></th>
                 <th>Nama Peserta</th>
                 <th>Nama Event</th>
                 <th>Status Pendaftaran</th>
@@ -618,27 +162,8 @@
 
 
         </section>
-
-        <div class="footer">
-            © {{ date('Y') }} EventHub — Event Management System
-        </div>
-
-    </main>
+        <div class="pagination-wrap">{{ $pendaftarans->links() }}</div>
 </div>
+@endsection
 
-<script>
-    function searchTable() {
-        let input = document.getElementById("searchTable");
-        let filter = input.value.toLowerCase();
-        let table = document.getElementById("pendaftaranTable");
-        let rows = table.getElementsByTagName("tr");
 
-        for (let i = 1; i < rows.length; i++) {
-            let text = rows[i].textContent.toLowerCase();
-            rows[i].style.display = text.includes(filter) ? "" : "none";
-        }
-    }
-</script>
-
-</body>
-</html>

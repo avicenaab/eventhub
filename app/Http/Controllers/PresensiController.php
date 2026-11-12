@@ -14,6 +14,7 @@ class PresensiController extends Controller
     {
         $filters = $request->validate([
             'search' => ['nullable', 'string', 'max:100'],
+            'sort' => ['nullable', Rule::in(['terbaru', 'terlama'])],
             'status_kehadiran' => [
                 'nullable',
                 Rule::in([
@@ -56,12 +57,14 @@ class PresensiController extends Controller
             );
         }
 
+        $sort = $filters['sort'] ?? 'terbaru';
         $presensis = $query
-            ->latest()
+            ->orderByRaw('waktu_hadir IS NULL ASC')
+            ->orderBy('waktu_hadir', $sort === 'terlama' ? 'asc' : 'desc')
             ->paginate(10)
             ->withQueryString();
 
-        return view('presensis.index', compact('presensis'));
+        return view('presensis.index', compact('presensis', 'sort'));
     }
 
     // Menampilkan form tambah presensi

@@ -1,11 +1,10 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tambah Pendaftaran - EventHub</title>
+@extends('layouts.admin')
 
-    <style>
+@section('title', 'Pendaftaran')
+
+@push('styles')
+<style>
+
         * {
             margin: 0;
             padding: 0;
@@ -23,7 +22,7 @@
             min-height: 100vh;
         }
 
-        .sidebar {
+        .legacy-module-page .sidebar {
             width: 245px;
             background: #172554;
             color: white;
@@ -31,7 +30,7 @@
             flex-shrink: 0;
         }
 
-        .brand {
+        .legacy-module-page .brand {
             font-size: 25px;
             font-weight: 800;
             padding: 0 12px;
@@ -39,18 +38,18 @@
             letter-spacing: -1px;
         }
 
-        .brand span {
+        .legacy-module-page .brand span {
             color: #60a5fa;
         }
 
-        .menu-label {
+        .legacy-module-page .menu-label {
             font-size: 11px;
             color: #94a3b8;
             letter-spacing: 1.5px;
             margin: 25px 12px 12px;
         }
 
-        .menu a {
+        .legacy-module-page .menu a {
             display: block;
             color: #cbd5e1;
             text-decoration: none;
@@ -60,8 +59,8 @@
             font-size: 14px;
         }
 
-        .menu a:hover,
-        .menu a.active {
+        .legacy-module-page .menu a:hover,
+        .legacy-module-page .menu a.active {
             background: #2563eb;
             color: white;
         }
@@ -72,16 +71,16 @@
             min-width: 0;
         }
 
-        .topbar {
+        .legacy-module-page .topbar {
             margin-bottom: 30px;
         }
 
-        .topbar h1 {
+        .legacy-module-page .topbar h1 {
             font-size: 27px;
             color: #172554;
         }
 
-        .topbar p {
+        .legacy-module-page .topbar p {
             color: #64748b;
             font-size: 14px;
             margin-top: 6px;
@@ -168,7 +167,7 @@
             gap: 18px;
         }
 
-        .alert-error {
+        .legacy-module-page .alert-error {
             background: #fee2e2;
             color: #991b1b;
             padding: 13px 16px;
@@ -211,7 +210,7 @@
             opacity: .85;
         }
 
-        .footer {
+        .legacy-module-page .footer {
             text-align: center;
             color: #94a3b8;
             font-size: 12px;
@@ -219,7 +218,7 @@
         }
 
         @media (max-width: 850px) {
-            .sidebar {
+            .legacy-module-page .sidebar {
                 width: 180px;
             }
 
@@ -233,25 +232,25 @@
                 display: block;
             }
 
-            .sidebar {
+            .legacy-module-page .sidebar {
                 width: 100%;
                 padding: 15px;
             }
 
-            .brand {
+            .legacy-module-page .brand {
                 margin-bottom: 15px;
             }
 
-            .menu {
+            .legacy-module-page .menu {
                 display: flex;
                 flex-wrap: wrap;
             }
 
-            .menu-label {
+            .legacy-module-page .menu-label {
                 display: none;
             }
 
-            .menu a {
+            .legacy-module-page .menu a {
                 padding: 9px 11px;
             }
 
@@ -264,29 +263,21 @@
                 padding: 20px;
             }
         }
-    </style>
-</head>
+    
 
-<body>
-<div class="layout">
+/* Compatibility overrides: shared EventHub admin shell */
+body { display:block !important; min-height:100vh; background:var(--bg) !important; color:var(--text) !important; font-family:'DM Sans',sans-serif !important; }
+.legacy-module-page 
+.legacy-module-page .main { width:auto !important; min-height:0 !important; margin:0 !important; padding:0 !important; flex:initial !important; background:transparent !important; }
+.layout { display:block !important; min-height:0 !important; }
+.legacy-module-page .footer { display:none !important; }
 
-    <aside class="sidebar">
-        <div class="brand">Event<span>Hub.</span></div>
+</style>
+@endpush
 
-        <div class="menu-label">MENU UTAMA</div>
-
-        <nav class="menu">
-            <a href="{{ url('/') }}">⌂ Dashboard</a>
-            <a href="{{ route('events.index') }}">▣ Events</a>
-            <a href="{{ route('pesertas.index') }}">♙ Peserta</a>
-            <a href="{{ route('pendaftarans.index') }}" class="active">▤ Pendaftaran</a>
-            <a href="{{ route('presensis.index') }}">◷ Presensi</a>
-        </nav>
-    </aside>
-
-    <main class="main">
-
-        <div class="topbar">
+@section('content')
+<div class="legacy-module-page">
+<div class="topbar">
             <div class="breadcrumb">
                 <a href="{{ route('pendaftarans.index') }}">Pendaftaran</a>
                 / Tambah Pendaftaran
@@ -296,6 +287,21 @@
             <p>Masukkan informasi peserta dan event yang ingin didaftarkan.</p>
         </div>
 
+        @if($pesertas->isEmpty() || $events->isEmpty())
+            <section class="form-card">
+                <div class="form-heading">
+                    <h2>Belum bisa membuat pendaftaran</h2>
+                    <p>Tambahkan data yang dibutuhkan terlebih dahulu. Halaman ini tetap bisa dibuka meskipun database masih kosong.</p>
+                </div>
+                @if($pesertas->isEmpty())
+                    <p>Belum ada data peserta. <a href="{{ route('pesertas.create') }}">Tambah peserta</a> terlebih dahulu.</p>
+                @endif
+                @if($events->isEmpty())
+                    <p>Belum ada data event. <a href="{{ route('events.create') }}">Tambah event</a> terlebih dahulu.</p>
+                @endif
+                <div class="form-actions"><a href="{{ route('pendaftarans.index') }}" class="btn btn-gray">Kembali ke Pendaftaran</a></div>
+            </section>
+        @else
         <section class="form-card">
 
             <div class="form-heading">
@@ -395,12 +401,7 @@
 
             </form>
         </section>
-
-        <div class="footer">
-            © {{ date('Y') }} EventHub — Event Management System
-        </div>
-
-    </main>
+        @endif
 </div>
-</body>
-</html>
+@endsection
+

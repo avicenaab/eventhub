@@ -12,6 +12,8 @@ class Event extends Model
         'tanggal_mulai',
         'tanggal_selesai',
         'lokasi',
+        'latitude',
+        'longitude',
         'kuota',
         'biaya',
         'status_event',
@@ -21,6 +23,8 @@ class Event extends Model
         'tanggal_mulai' => 'datetime',
         'tanggal_selesai' => 'datetime',
         'biaya' => 'decimal:2',
+        'latitude' => 'decimal:7',
+        'longitude' => 'decimal:7',
     ];
 
     public function pendaftarans()
