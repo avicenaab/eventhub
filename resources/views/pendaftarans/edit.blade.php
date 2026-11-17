@@ -1,11 +1,10 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Pendaftaran - EventHub</title>
+@extends('layouts.admin')
 
-    <style>
+@section('title', 'Pendaftaran')
+
+@push('styles')
+<style>
+
         * {
             margin: 0;
             padding: 0;
@@ -20,20 +19,20 @@
             color: #263248;
         }
 
-        .sidebar {
+        .legacy-module-page .sidebar {
             width: 240px;
             background: #172554;
             color: white;
             padding: 30px 20px;
         }
 
-        .brand {
+        .legacy-module-page .brand {
             font-size: 24px;
             font-weight: bold;
             margin-bottom: 40px;
         }
 
-        .sidebar a {
+        .legacy-module-page .sidebar a {
             display: block;
             color: #cbd5e1;
             text-decoration: none;
@@ -42,8 +41,8 @@
             margin-bottom: 8px;
         }
 
-        .sidebar a:hover,
-        .sidebar a.active {
+        .legacy-module-page .sidebar a:hover,
+        .legacy-module-page .sidebar a.active {
             background: #2563eb;
             color: white;
         }
@@ -53,16 +52,16 @@
             padding: 40px;
         }
 
-        .header {
+        .legacy-module-page .header {
             margin-bottom: 30px;
         }
 
-        .header h1 {
+        .legacy-module-page .header h1 {
             font-size: 28px;
             margin-bottom: 8px;
         }
 
-        .header p {
+        .legacy-module-page .header p {
             color: #64748b;
         }
 
@@ -99,7 +98,7 @@
             border-color: #2563eb;
         }
 
-        .actions {
+        .legacy-module-page .actions {
             display: flex;
             gap: 12px;
             margin-top: 30px;
@@ -140,7 +139,7 @@
                 flex-direction: column;
             }
 
-            .sidebar {
+            .legacy-module-page .sidebar {
                 width: 100%;
             }
 
@@ -148,24 +147,21 @@
                 padding: 20px;
             }
         }
-    </style>
-</head>
+    
 
-<body>
+/* Compatibility overrides: shared EventHub admin shell */
+body { display:block !important; min-height:100vh; background:var(--bg) !important; color:var(--text) !important; font-family:'DM Sans',sans-serif !important; }
+.legacy-module-page 
+.legacy-module-page .main { width:auto !important; min-height:0 !important; margin:0 !important; padding:0 !important; flex:initial !important; background:transparent !important; }
+.layout { display:block !important; min-height:0 !important; }
+.legacy-module-page .footer { display:none !important; }
 
-    <aside class="sidebar">
-        <div class="brand">EventHub</div>
+</style>
+@endpush
 
-        <a href="{{ url('/') }}">Dashboard</a>
-        <a href="{{ route('events.index') }}">Events</a>
-        <a href="{{ route('pesertas.index') }}">Peserta</a>
-        <a href="{{ route('pendaftarans.index') }}" class="active">Pendaftaran</a>
-        <a href="{{ route('presensis.index') }}">Presensi</a>
-    </aside>
-
-    <main class="main">
-
-        <div class="header">
+@section('content')
+<div class="legacy-module-page">
+<div class="header">
             <h1>Edit Pendaftaran</h1>
             <p>Perbarui informasi pendaftaran event.</p>
         </div>
@@ -239,9 +235,6 @@
                 </div>
 
             </form>
+</div>
+@endsection
 
-        </div>
-    </main>
-
-</body>
-</html>

@@ -56,3 +56,30 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+
+## Peta lokasi event
+
+Form tambah/edit Event menggunakan Leaflet dengan tile publik OpenStreetMap. Admin dapat mengisi nama lokasi, memilih titik dengan klik pada peta, atau menggeser marker. Koordinat latitude dan longitude disimpan pada tabel `events`. Halaman detail event publik dan admin menampilkan peta jika koordinat tersedia.
+
+Peta menggunakan tile standar `https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png` dan selalu menampilkan atribusi OpenStreetMap. Penggunaan harus mematuhi [Tile Usage Policy](https://operations.osmfoundation.org/policies/tiles/); layanan tile publik bukan untuk penggunaan offline/bulk atau trafik berat. Tidak diperlukan API key untuk penggunaan interaktif normal dengan atribusi.
+
+Jalankan migrasi tambahan setelah memperbarui kode:
+
+```bash
+php artisan migrate
+php artisan view:clear
+php artisan optimize:clear
+```
+
+Event lama tetap valid. Kolom koordinat baru bersifat nullable sehingga event lama tanpa titik peta tetap dapat ditampilkan.
+
+## Pencarian lokasi event (Photon)
+
+Form tambah/edit Event menggunakan Photon untuk autocomplete lokasi, Leaflet untuk interaksi peta, dan tile OpenStreetMap untuk tampilan peta. Pencarian mengikuti titik tengah dan tingkat zoom peta, membatasi hasil ke wilayah Indonesia, serta mengisi nama lokasi dan koordinat saat hasil dipilih. Admin juga dapat menentukan titik dengan klik peta atau menggeser marker.
+
+Photon tidak membutuhkan API key atau konfigurasi billing. Hasilnya bergantung pada kelengkapan data OpenStreetMap, sehingga beberapa gedung atau unit bangunan mungkin belum terdaftar.
+
+## Sorting data
+
+Halaman Events diurutkan berdasarkan tanggal mulai, Pendaftaran berdasarkan tanggal daftar, Presensi berdasarkan waktu hadir, dan Peserta berdasarkan tanggal data dibuat. Pilihan terbaru/terlama diproses di query database sebelum pagination.
