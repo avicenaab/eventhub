@@ -14,6 +14,7 @@ class DatabaseSeeder extends Seeder
             EventSeeder::class,
             PendaftaranSeeder::class,
             PresensiSeeder::class,
+            EventHubDummySeeder::class,
         ]);
     }
 }
